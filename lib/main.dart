@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
+
+import 'sky.dart';
 
 void main() => runApp(MyApp());
 
@@ -97,6 +100,19 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.display1,
+            ),
+            CustomPaint(
+              painter: Sky(),
+              child: Center(
+                child: Text(
+                  'Once upon a time...',
+                  style: const TextStyle(
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.w900,
+                    color: Color(0xFFFFFFFF),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
