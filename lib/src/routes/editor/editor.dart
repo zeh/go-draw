@@ -3,9 +3,14 @@ import "package:flutter/widgets.dart";
 import "../../widgets/bottom_spacer.dart";
 import "../../widgets/status_bar_spacer.dart";
 
-class Editor extends StatelessWidget {
+class Editor extends StatefulWidget {
   Editor({ Key key }) : super(key: key);
 
+  @override
+  EditorState createState() => EditorState();
+}
+
+class EditorState extends State<Editor> {
   @override
   Widget build(BuildContext context) {
     return Column(
