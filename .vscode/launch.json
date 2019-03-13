@@ -9,6 +9,12 @@
 			"request": "launch",
 			"type": "dart",
 			// For verbose mode: "args": ["-v"]
+		},
+		{
+			"name": "Flutter (profile)",
+			"request": "launch",
+			"type": "dart",
+			"flutterMode": "profile"
 		}
 	]
 }
