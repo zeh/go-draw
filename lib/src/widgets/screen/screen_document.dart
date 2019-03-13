@@ -18,20 +18,31 @@ class ScreenDocument {
 
   int get height => _height;
 
-  void setChar(int col, int row, int char, int foregroundColor, int backgroundColor) {
-    if (col >= _width || row >= _height) {
-      resize(Math.max(col + 1, _width), Math.max(row + 1, _height));
-    }
-
-    var pos = row * _width + col;
+  void setChar(int col, int row, int char) {
+    resizeToFitIfNeeded(col, row);
+    var pos = getPos(col, row);
     _chars[pos] = char;
+  }
+
+  void setColor(int col, int row, int foregroundColor, int backgroundColor) {
+    resizeToFitIfNeeded(col, row);
+    var pos = getPos(col, row);
     _foregroundColors[pos] = foregroundColor;
     _backgroundColors[pos] = backgroundColor;
   }
 
-  // TODO: this is temporary
+  void resizeToFitIfNeeded(int col, int row) {
+    if (col >= _width || row >= _height) {
+      resize(Math.max(col + 1, _width), Math.max(row + 1, _height));
+    }
+  }
+
   int getChar(int col, int row) {
-    return _chars[row * _width + col];
+    return _chars[getPos(col, row)];
+  }
+
+  int getPos(int col, int row) {
+    return row * _width + col;
   }
 
   void resize(int newWidth, int newHeight) {

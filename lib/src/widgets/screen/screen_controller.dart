@@ -16,7 +16,7 @@ class ScreenController {
   }
 
   void insert(int charCode) {
-    document.setChar(_col, _row, charCode, 7, 0);
+    document.setChar(_col, _row, charCode);
     _col++;
   }
 }
