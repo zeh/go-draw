@@ -1,21 +1,16 @@
 import "package:flutter/widgets.dart";
 
 import "screen_document.dart";
+import "screen_charset.dart";
 
 class ScreenPainter extends CustomPainter {
   final ScreenDocument document;
-  final ImageStream charset;
-
-  ImageInfo _imageInfo;
-  bool _isDirty;
+  final ScreenCharset charset;
 
   ScreenPainter({
     @required this.document,
     @required this.charset
-  }) {
-    _isDirty = false;
-    charset.addListener(_updateImage);
-  }
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -28,7 +23,7 @@ class ScreenPainter extends CustomPainter {
       paint,
     );
 
-    if (_imageInfo != null && _imageInfo.image != null) {
+    if (charset.imageInfo != null && charset.imageInfo.image != null) {
       print("PAINTING WITH IMAGE");
       //var charPaint = Paint();
       //charPaint.color = Color(0xffffffff);
@@ -44,36 +39,24 @@ class ScreenPainter extends CustomPainter {
             }
           }
         }
-        _placeCharacter(canvas, 176, 4, 4);
-        _placeCharacter(canvas, 177, 5, 4);
-        _placeCharacter(canvas, 178, 6, 4);
-        _placeCharacter(canvas, 219, 7, 4);
       } else {
         print("Missing document?!");
       }
     } else {
       print("PAINTING WITHOUT IMAGE");
     }
-
-    _isDirty = false;
   }
 
   @override
-  bool shouldRepaint(ScreenPainter oldDelegate) => _isDirty;
+  bool shouldRepaint(ScreenPainter oldDelegate) => true; // TODO: detect actual changes
 
   @override
   bool shouldRebuildSemantics(ScreenPainter oldDelegate) => false;
 
-  _updateImage(ImageInfo imageInfo, bool synchronousCall) {
-    _imageInfo = imageInfo;
-    _isDirty = true;
-    print("HAS CHANGED");
-  }
-
   _placeCharacter(Canvas canvas, int char, int col, int row) {
-    int charWidth = 8;
-    int charHeight = 16;
-    int charCols = _imageInfo.image.width ~/ charWidth;
+    int charWidth = charset.charWidth;
+    int charHeight = charset.charHeight;
+    int charCols = charset.imageInfo.image.width ~/ charWidth;
 
     int charCol = char % charCols;
     int charRow = char ~/ charCols;
@@ -85,9 +68,10 @@ class ScreenPainter extends CustomPainter {
     var charPosTo = Offset(col * charWidth.toDouble(), row * charHeight.toDouble());
     var charSize = Offset(charWidth.toDouble(), charHeight.toDouble());
 
-    canvas.drawImageRect(_imageInfo.image, Rect.fromPoints(charPosFrom, charPosFrom + charSize), Rect.fromPoints(charPosTo, charPosTo + charSize), charPaint);
 
+    canvas.drawImageRect(charset.imageInfo.image, Rect.fromPoints(charPosFrom, charPosFrom + charSize), Rect.fromPoints(charPosTo, charPosTo + charSize), charPaint);
+
+    // TODO: use atlas for speed
     //canvas.drawAtlas(atlas, transforms, rects, colors, blendMode, cullRect, paint)
-
   }
 }

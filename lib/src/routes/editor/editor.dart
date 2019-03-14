@@ -4,6 +4,7 @@ import "package:flutter/widgets.dart";
 
 import "../../widgets/bottom_spacer.dart";
 import "../../widgets/screen/screen.dart";
+import "../../widgets/screen/screen_charset.dart";
 import "../../widgets/status_bar_spacer.dart";
 
 class Editor extends StatefulWidget {
@@ -59,7 +60,12 @@ class EditorState extends State<Editor> {
             children: [
               Expanded(
                 child: Screen(
-                  charset: AssetImage("assets/charsets/ibmvga8_cp437_8x16.png"),
+                  charset: ScreenCharset(
+                    context: context,
+                    charWidth: 8,
+                    charHeight: 16,
+                    map: AssetImage("assets/charsets/ibmvga8_cp437_8x16.png"),
+                  ),
                   commandStream: changeNotifier.stream
                 ),
               ),

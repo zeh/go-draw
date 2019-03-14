@@ -2,12 +2,13 @@ import "dart:async";
 
 import "package:flutter/widgets.dart";
 
+import "screen_charset.dart";
 import "screen_controller.dart";
 import "screen_document.dart";
 import "screen_renderer.dart";
 
 class Screen extends StatefulWidget {
-  final AssetImage charset;
+  final ScreenCharset charset;
   final Stream<int> commandStream;
 
   Screen({@required this.charset, @required this.commandStream});
