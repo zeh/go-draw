@@ -1,6 +1,7 @@
 import "package:flutter/widgets.dart";
 
 import "screen_charset.dart";
+import "screen_colors.dart";
 import "screen_controller.dart";
 import "screen_document.dart";
 import "screen_painter.dart";
@@ -9,11 +10,13 @@ class ScreenRenderer extends StatefulWidget {
   final ScreenController controller;
   final ScreenDocument document;
   final ScreenCharset charset;
+  final ScreenColors colors;
 
   ScreenRenderer({
     @required this.controller,
     @required this.document,
-    @required this.charset
+    @required this.charset,
+    @required this.colors,
   });
 
   @override
@@ -33,6 +36,7 @@ class ScreenState extends State<ScreenRenderer> {
         painter: ScreenPainter(
           document: widget.document,
           charset: widget.charset,
+          colors: widget.colors,
         ),
       ),
     );

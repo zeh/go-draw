@@ -2,14 +2,17 @@ import "package:flutter/widgets.dart";
 
 import "screen_document.dart";
 import "screen_charset.dart";
+import "screen_colors.dart";
 
 class ScreenPainter extends CustomPainter {
   final ScreenDocument document;
   final ScreenCharset charset;
+  final ScreenColors colors;
 
   ScreenPainter({
     @required this.document,
-    @required this.charset
+    @required this.charset,
+    @required this.colors,
   });
 
   @override
@@ -68,7 +71,10 @@ class ScreenPainter extends CustomPainter {
     var charPosTo = Offset(col * charWidth.toDouble(), row * charHeight.toDouble());
     var charSize = Offset(charWidth.toDouble(), charHeight.toDouble());
 
+    charPaint.colorFilter = colors.getAsColorFilter(2);
+    canvas.drawRect(Rect.fromPoints(charPosTo, charPosTo + charSize), charPaint);
 
+    charPaint.colorFilter = colors.getAsColorFilter(10);
     canvas.drawImageRect(charset.imageInfo.image, Rect.fromPoints(charPosFrom, charPosFrom + charSize), Rect.fromPoints(charPosTo, charPosTo + charSize), charPaint);
 
     // TODO: use atlas for speed

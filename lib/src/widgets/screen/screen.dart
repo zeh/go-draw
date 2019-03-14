@@ -3,6 +3,7 @@ import "dart:async";
 import "package:flutter/widgets.dart";
 
 import "screen_charset.dart";
+import "screen_colors.dart";
 import "screen_controller.dart";
 import "screen_document.dart";
 import "screen_renderer.dart";
@@ -10,8 +11,13 @@ import "screen_renderer.dart";
 class Screen extends StatefulWidget {
   final ScreenCharset charset;
   final Stream<int> commandStream;
+  final ScreenColors colors;
 
-  Screen({@required this.charset, @required this.commandStream});
+  Screen({
+    @required this.charset,
+    @required this.commandStream,
+    @required this.colors,
+  });
 
   @override
   ScreenState createState() => ScreenState();
@@ -41,6 +47,7 @@ class ScreenState extends State<Screen> {
         controller: _controller,
         document: _document,
         charset: widget.charset,
+        colors: widget.colors,
       ),
       transform: new Matrix4.rotationZ(0)//new Matrix4.rotationZ(0.5)
     );
