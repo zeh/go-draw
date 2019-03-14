@@ -1,16 +1,5 @@
-# go_draw
+# go-draw
 
-A new Flutter project.
+This is an experimental [Flutter](https://flutter.dev/) project. The goal is to write a mobile-first [ANSI Art](https://en.wikipedia.org/wiki/ANSI_art) drawing application in the mold of [TheDraw](https://en.wikipedia.org/wiki/TheDraw), [ACiDDraw](http://www.acid.org/apps/apps.html), and [PabloDraw](http://picoe.ca/products/pablodraw/).
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+This is an excuse for me to learn Flutter and Dart, so there's not much going on here other than a million refactors an hour and probably a lot of really dumb Dart code.
