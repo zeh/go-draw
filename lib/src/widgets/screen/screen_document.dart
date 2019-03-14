@@ -8,9 +8,9 @@ class ScreenDocument {
   List<int> _foregroundColors;
   List<int> _backgroundColors;
 
-  int defaultChar = 32;
-  int defaultForegroundColor = 7;
-  int defaultBackgroundColor = 0;
+  final int defaultChar = 32;
+  final int defaultForegroundColor = 7;
+  final int defaultBackgroundColor = 0;
 
 
   // ================================================================================================================
