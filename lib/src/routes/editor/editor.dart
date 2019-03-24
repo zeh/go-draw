@@ -3,6 +3,8 @@ import "dart:async";
 import "package:flutter/widgets.dart";
 
 import "../../widgets/bottom_spacer.dart";
+import "../../widgets/keyboard/keyboard_key.dart";
+import "../../widgets/keyboard/keyboard.dart";
 import "../../widgets/screen/screen.dart";
 import "../../widgets/screen/screen_charset.dart";
 import "../../widgets/screen/screen_colors.dart";
@@ -38,21 +40,6 @@ class EditorState extends State<Editor> {
             color: Color(0xff0000ff),
             child: Text("Go to other screen"),
           ),
-        ),
-        Flex(
-          direction: Axis.horizontal,
-          children: [
-            getButton("░", 176),
-            getButton("▒", 177),
-            getButton("▓", 178),
-            getButton("█", 219),
-            getButton("▀", 223),
-            getButton("▄", 220),
-            getButton("▌", 221),
-            getButton("▐", 222),
-            getButton("■", 254),
-            getButton("·", 250), // or 249 ∙
-          ]
         ),
         Expanded(
           child: Flex(
@@ -93,20 +80,26 @@ class EditorState extends State<Editor> {
             ]
           ),
         ),
+        Keyboard(
+          currentSet: 0,
+          sets: [
+            [
+              KeyboardKey(character: "░", code: 176),
+              KeyboardKey(character: "▒", code: 177),
+              KeyboardKey(character: "▓", code: 178),
+              KeyboardKey(character: "█", code: 219),
+              KeyboardKey(character: "▀", code: 223),
+              KeyboardKey(character: "▄", code: 220),
+              KeyboardKey(character: "▌", code: 221),
+              KeyboardKey(character: "▐", code: 222),
+              KeyboardKey(character: "■", code: 254),
+              KeyboardKey(character: "·", code: 250), // or 249 ∙
+            ],
+          ],
+          onTap: (charCode) => changeNotifier.sink.add(charCode)
+        ),
         BottomSpacer(),
       ]
-    );
-  }
-
-  Widget getButton(String label, int charCode) {
-    return GestureDetector(
-      onTap: () => changeNotifier.sink.add(charCode),
-      child: Container(
-        margin: EdgeInsets.all(2.0),
-        padding: EdgeInsets.all(10.0),
-        color: Color(0xff0000ff),
-        child: Text(label),
-      )
     );
   }
 }

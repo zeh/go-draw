@@ -32,8 +32,6 @@ class ScreenState extends State<Screen> {
   @override
   void initState() {
     super.initState();
-
-    super.initState();
     commandStreamSubscription = widget.commandStream.listen(insertChar);
 
     _document = new ScreenDocument();
