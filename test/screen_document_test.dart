@@ -1,5 +1,5 @@
+import "package:go_draw/src/data/screen/document/screen_document.dart";
 import "package:test/test.dart";
-import "package:go_draw/src/widgets/screen/screen_document.dart";
 
 void main() {
   group("ScreenDocument", () {
