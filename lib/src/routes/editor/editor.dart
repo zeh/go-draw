@@ -1,8 +1,8 @@
-import "dart:async";
-
 import "package:flutter/widgets.dart";
 import "package:go_draw/src/data/screen/charset/templates/screen_charset_vga.dart";
 import "package:go_draw/src/data/screen/colors/templates/screen_colors_dos.dart";
+import "package:go_draw/src/data/screen/controllers/screen_keyboard_controller.dart";
+import "package:go_draw/src/data/screen/document/screen_document.dart";
 import "package:go_draw/src/widgets/bottom_spacer.dart";
 import "package:go_draw/src/widgets/keyboard/keyboard.dart";
 import "package:go_draw/src/widgets/keyboard/keyboard_key.dart";
@@ -17,11 +17,19 @@ class Editor extends StatefulWidget {
 }
 
 class EditorState extends State<Editor> {
-  final changeNotifier = new StreamController<int>.broadcast();
+  ScreenDocument _document;
+  ScreenKeyboardController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _document = new ScreenDocument();
+    _controller = new ScreenKeyboardController(document: _document);
+  }
 
   @override
   void dispose() {
-    changeNotifier.close();
     super.dispose();
   }
 
@@ -49,7 +57,7 @@ class EditorState extends State<Editor> {
                 child: Screen(
                   charset: ScreenCharsetVGA(context: context),
                   colors: ScreenColorsDOS(),
-                  commandStream: changeNotifier.stream
+                  document: _document
                 ),
               ),
             ]
@@ -71,10 +79,17 @@ class EditorState extends State<Editor> {
               KeyboardKey(character: "·", code: 250), // or 249 ∙
             ],
           ],
-          onTap: (charCode) => changeNotifier.sink.add(charCode)
+          onTap: (charCode) => insertChar(charCode)
         ),
         BottomSpacer(),
       ]
     );
+  }
+
+  void insertChar(int charCode) {
+    _controller.insert(charCode);
+    print("Writing...");
+    print(_document);
+    setState(() {});
   }
 }
