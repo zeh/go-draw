@@ -62,6 +62,7 @@ class KeyboardState extends State<Keyboard> {
           ),
           child: Text(
             label,
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: Color(0xff000000),
             ),
