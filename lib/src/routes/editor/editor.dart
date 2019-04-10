@@ -85,6 +85,18 @@ class EditorState extends State<Editor> {
           ],
           onTap: (charCode) => insertChar(charCode)
         ),
+        Keyboard(
+          currentSet: 0,
+          sets: [
+            [
+              KeyboardKey(character: "↑", code: 0),
+              KeyboardKey(character: "↓", code: 1),
+              KeyboardKey(character: "←", code: 2),
+              KeyboardKey(character: "→", code: 3),
+            ],
+          ],
+          onTap: (code) => moveCursor(code)
+        ),
         BottomSpacer(),
       ]
     );
@@ -100,6 +112,17 @@ class EditorState extends State<Editor> {
 
   void insertChar(int charCode) {
     _controller.insert(charCode);
+    _streamController.sink.add(_document);
+  }
+
+  void moveCursor(int code) {
+    int cols = 0;
+    int rows = 0;
+    if (code == 0) rows = -1;
+    if (code == 1) rows = 1;
+    if (code == 2) cols = -1;
+    if (code == 3) cols = 1;
+    _controller.moveBy(cols, rows);
     _streamController.sink.add(_document);
   }
 }
