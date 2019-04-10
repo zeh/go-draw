@@ -1,3 +1,5 @@
+import "dart:async";
+
 import "package:flutter/widgets.dart";
 import "package:go_draw/src/data/screen/charset/templates/screen_charset_vga.dart";
 import "package:go_draw/src/data/screen/colors/templates/screen_colors_dos.dart";
@@ -19,6 +21,7 @@ class Editor extends StatefulWidget {
 class EditorState extends State<Editor> {
   ScreenDocument _document;
   ScreenKeyboardController _controller;
+  final StreamController<ScreenDocument> _streamController = StreamController<ScreenDocument>();
 
   @override
   void initState() {
@@ -30,6 +33,7 @@ class EditorState extends State<Editor> {
 
   @override
   void dispose() {
+    _streamController.close();
     super.dispose();
   }
 
@@ -54,13 +58,13 @@ class EditorState extends State<Editor> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: Screen(
-                  charset: ScreenCharsetVGA(context: context),
-                  colors: ScreenColorsDOS(),
-                  document: _document
+                child: StreamBuilder<ScreenDocument>(
+                  stream: _streamController.stream,
+                  initialData: _document,
+                  builder: buildForStream,
                 ),
               ),
-            ]
+            ],
           ),
         ),
         Keyboard(
@@ -86,10 +90,16 @@ class EditorState extends State<Editor> {
     );
   }
 
+  Widget buildForStream(BuildContext context, AsyncSnapshot<ScreenDocument> snapshot) {
+    return Screen(
+      charset: ScreenCharsetVGA(context: context),
+      colors: ScreenColorsDOS(),
+      document: snapshot.data,
+    );
+  }
+
   void insertChar(int charCode) {
     _controller.insert(charCode);
-    print("Writing...");
-    print(_document);
-    setState(() {});
+    _streamController.sink.add(_document);
   }
 }
