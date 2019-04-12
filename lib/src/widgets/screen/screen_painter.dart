@@ -70,10 +70,10 @@ class ScreenPainter extends CustomPainter {
     var charPosTo = Offset(col * charWidth.toDouble(), row * charHeight.toDouble());
     var charSize = Offset(charWidth.toDouble(), charHeight.toDouble());
 
-    charPaint.colorFilter = colors.getAsColorFilter(2);
+    charPaint.colorFilter = colors.getStampColorFilter(2);
     canvas.drawRect(Rect.fromPoints(charPosTo, charPosTo + charSize), charPaint);
 
-    charPaint.colorFilter = colors.getAsColorFilter(10);
+    charPaint.colorFilter = colors.getStampColorFilter(10);
     canvas.drawImageRect(charset.imageInfo.image, Rect.fromPoints(charPosFrom, charPosFrom + charSize), Rect.fromPoints(charPosTo, charPosTo + charSize), charPaint);
 
     // TODO: use atlas for speed
