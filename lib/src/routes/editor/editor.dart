@@ -111,6 +111,9 @@ class EditorState extends State<Editor> {
   }
 
   void insertChar(int charCode) {
+    // TODO: allow changing the color
+    _controller.setForegroundColor(10);
+    _controller.setBackgroundColor(2);
     _controller.insert(charCode);
     _streamController.sink.add(_document);
   }
