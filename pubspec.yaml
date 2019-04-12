@@ -26,6 +26,12 @@ dependencies:
   package_info: any
   sentry: any
 
+  # All Firebase dependencies
+  # More info: https://firebase.google.com/docs/flutter/setup#add_flutterfire_plugins
+  # List of plugins and versions: https://firebaseopensource.com/projects/flutter/plugins/
+  firebase_core: ^0.4.0
+  firebase_analytics: ^3.0.1
+
 dev_dependencies:
   test: ^1.5.3
   flutter_test:
