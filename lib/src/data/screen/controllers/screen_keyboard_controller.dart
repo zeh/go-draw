@@ -14,8 +14,18 @@ class ScreenKeyboardController {
 
   int _col = 0;
   int _row = 0;
+  int _foregroundColor = 0;
+  int _backgroundColor = 0;
 
   ScreenKeyboardController({@required this.document});
+
+  void setForegroundColor(int colorCode) {
+    _foregroundColor = colorCode;
+  }
+
+  void setBackgroundColor(int colorCode) {
+    _backgroundColor = colorCode;
+  }
 
   void moveTo(int col, int row) {
     _col = col;
@@ -29,6 +39,7 @@ class ScreenKeyboardController {
 
   void insert(int charCode) {
     document.setChar(_col, _row, charCode);
+    document.setColor(_col, _row, _foregroundColor, _backgroundColor);
     _col++;
   }
 
