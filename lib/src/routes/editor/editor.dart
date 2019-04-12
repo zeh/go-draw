@@ -6,6 +6,7 @@ import "package:go_draw/src/data/screen/colors/screen_colors.dart";
 import "package:go_draw/src/data/screen/colors/templates/screen_colors_dos.dart";
 import "package:go_draw/src/data/screen/controllers/screen_keyboard_controller.dart";
 import "package:go_draw/src/data/screen/document/screen_document.dart";
+import "package:go_draw/src/utils/analytics.dart";
 import "package:go_draw/src/widgets/bottom_spacer.dart";
 import "package:go_draw/src/widgets/color_bar/color_bar.dart";
 import "package:go_draw/src/widgets/keyboard/keyboard.dart";
@@ -30,6 +31,8 @@ class EditorState extends State<Editor> {
   @override
   void initState() {
     super.initState();
+
+    Analytics.trackScreen("/");
 
     _document = new ScreenDocument();
     _colors = new ScreenColorsDOS();
