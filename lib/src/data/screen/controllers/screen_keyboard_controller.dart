@@ -54,5 +54,13 @@ class ScreenKeyboardController {
     _prevCols.add(_col);
     _prevRows.add(_row);
   }
+
+  int getColumn() {
+    return _col;
+  }
+
+  int getRow() {
+    return _row;
+  }
 }
 
