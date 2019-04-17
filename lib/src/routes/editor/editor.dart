@@ -107,6 +107,8 @@ class EditorState extends State<Editor> {
       charset: ScreenCharsetVGA(context: context),
       colors: ScreenColorsDOS(),
       document: snapshot.data,
+      cursorCol: _controller.getColumn(),
+      cursorRow: _controller.getRow(),
     );
   }
 

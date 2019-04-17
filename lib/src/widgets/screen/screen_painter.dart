@@ -3,15 +3,23 @@ import "package:go_draw/src/data/screen/charset/screen_charset.dart";
 import "package:go_draw/src/data/screen/colors/screen_colors.dart";
 import "package:go_draw/src/data/screen/document/screen_document.dart";
 
+/// Renders a static screen texture, and optional static cursor
+
 class ScreenPainter extends CustomPainter {
   final ScreenDocument document;
   final ScreenCharset charset;
   final ScreenColors colors;
+  final int cursorCol;
+  final int cursorRow;
+  final bool renderCursor;
 
   ScreenPainter({
     @required this.document,
     @required this.charset,
     @required this.colors,
+    @required this.cursorCol,
+    @required this.cursorRow,
+    @required this.renderCursor,
   });
 
   @override
@@ -75,7 +83,7 @@ class ScreenPainter extends CustomPainter {
         }
 
         // Draws characters
-        Paint paint = Paint();
+        Paint atlasPaint = Paint();
         canvas.drawAtlas(
           charset.imageInfo.image,
           charTransforms,
@@ -83,9 +91,18 @@ class ScreenPainter extends CustomPainter {
           charColors,
           BlendMode.modulate,
           null,
-          paint,
+          atlasPaint,
         );
-        print('Painting for ${rows * cols} characters executed in ${stopwatch.elapsedMicroseconds / 1000}ms');
+
+        // Draws cursor
+        if (renderCursor) {
+          Paint cursorPaint = Paint();
+          cursorPaint.color = colors.get(15);
+          int cursorHeight = (charHeight * 0.2).round();
+          canvas.drawRect(Rect.fromLTWH(cursorCol * charWidth, cursorRow * charHeight + charHeight - cursorHeight, charWidth, cursorHeight.toDouble()), cursorPaint);
+        }
+
+        // print('Painting for ${rows * cols} characters executed in ${stopwatch.elapsedMicroseconds / 1000}ms');
       } else {
         print("Missing document?!");
       }

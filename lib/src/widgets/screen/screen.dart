@@ -5,15 +5,21 @@ import "package:go_draw/src/data/screen/document/screen_document.dart";
 
 import "screen_renderer.dart";
 
+/// Renders a screen widget, positioning the screen textrue accordingly
+
 class Screen extends StatefulWidget {
   final ScreenCharset charset;
   final ScreenColors colors;
   final ScreenDocument document;
+  final int cursorCol;
+  final int cursorRow;
 
   Screen({
     @required this.charset,
     @required this.colors,
     @required this.document,
+    @required this.cursorCol,
+    @required this.cursorRow,
   });
 
   @override
@@ -33,6 +39,8 @@ class ScreenState extends State<Screen> {
         document: widget.document,
         charset: widget.charset,
         colors: widget.colors,
+        cursorCol: widget.cursorCol,
+        cursorRow: widget.cursorRow,
       ),
       transform: new Matrix4.rotationZ(0)//new Matrix4.rotationZ(0.5)
     );
