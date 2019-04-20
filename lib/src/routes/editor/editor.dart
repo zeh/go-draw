@@ -10,6 +10,7 @@ import "package:go_draw/src/widgets/keyboard/keyboard.dart";
 import "package:go_draw/src/widgets/keyboard/keyboard_key.dart";
 import "package:go_draw/src/widgets/screen/screen.dart";
 import "package:go_draw/src/widgets/status_bar_spacer.dart";
+import "package:go_draw/src/widgets/tool_bar/tool_bar.dart";
 
 class Editor extends StatefulWidget {
   Editor({ Key key }) : super(key: key);
@@ -96,6 +97,10 @@ class EditorState extends State<Editor> {
             ],
           ],
           onTap: (code) => _moveCursor(code)
+        ),
+        ToolBar(
+          currentTool: 1,
+          onTap: (Tools toolId) => print("TAP on tool $toolId"),
         ),
         BottomSpacer(),
       ]
