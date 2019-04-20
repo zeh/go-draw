@@ -46,6 +46,11 @@ flutter:
 
   assets:
     - assets/charsets/ibmvga8_cp437_8x16.png
+    - assets/tools/folder-open.svg
+    - assets/tools/i-cursor.svg
+    - assets/tools/share-alt.svg
+    - assets/tools/share-square.svg
+    - assets/tools/vector-square.svg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

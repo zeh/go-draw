@@ -5,3 +5,7 @@ This is an experimental [Flutter](https://flutter.dev/) project. The goal is to 
 This is an excuse for me to learn Flutter and Dart, so there's not much going on here other than a million refactors an hour and probably a lot of really dumb Dart code.
 
 Check the [changelog](CHANGELOG.md) for a high-level list of changes made so far.
+
+## Acknowledgements
+
+Uses [FontAwesome](https://fontawesome.com/) icons.
