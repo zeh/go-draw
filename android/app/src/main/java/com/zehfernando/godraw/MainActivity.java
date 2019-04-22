@@ -1,4 +1,4 @@
-package com.example.go_draw;
+package com.zehfernando.godraw;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
