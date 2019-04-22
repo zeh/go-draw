@@ -9,5 +9,7 @@ public class MainActivity extends FlutterActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     GeneratedPluginRegistrant.registerWith(this);
+
+    // TODO: show splash layout, remove when first frame drawn
   }
 }
