@@ -83,7 +83,7 @@ class EditorState extends State<Editor> {
               KeyboardKey(character: "·", code: 250), // or 249 ∙
             ],
           ],
-          onTap: (charCode) => insertChar(charCode)
+          onTap: (charCode) => _insertChar(charCode)
         ),
         Keyboard(
           currentSet: 0,
@@ -95,7 +95,7 @@ class EditorState extends State<Editor> {
               KeyboardKey(character: "→", code: 3),
             ],
           ],
-          onTap: (code) => moveCursor(code)
+          onTap: (code) => _moveCursor(code)
         ),
         BottomSpacer(),
       ]
@@ -112,7 +112,7 @@ class EditorState extends State<Editor> {
     );
   }
 
-  void insertChar(int charCode) {
+  void _insertChar(int charCode) {
     // TODO: allow changing the color
     _controller.setForegroundColor(10);
     _controller.setBackgroundColor(2);
@@ -120,7 +120,7 @@ class EditorState extends State<Editor> {
     _streamController.sink.add(_document);
   }
 
-  void moveCursor(int code) {
+  void _moveCursor(int code) {
     int cols = 0;
     int rows = 0;
     if (code == 0) rows = -1;
