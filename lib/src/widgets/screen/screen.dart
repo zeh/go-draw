@@ -13,6 +13,7 @@ class Screen extends StatefulWidget {
   final ScreenDocument document;
   final int cursorCol;
   final int cursorRow;
+  final void Function(int, int) onTapPosition;
 
   Screen({
     @required this.charset,
@@ -20,6 +21,7 @@ class Screen extends StatefulWidget {
     @required this.document,
     @required this.cursorCol,
     @required this.cursorRow,
+    this.onTapPosition,
   });
 
   @override
@@ -35,14 +37,24 @@ class ScreenState extends State<Screen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: ScreenRenderer(
-        document: widget.document,
-        charset: widget.charset,
-        colors: widget.colors,
-        cursorCol: widget.cursorCol,
-        cursorRow: widget.cursorRow,
+      child: GestureDetector(
+        onTapUp: _handleScreenTapUp,
+        child: ScreenRenderer(
+          document: widget.document,
+          charset: widget.charset,
+          colors: widget.colors,
+          cursorCol: widget.cursorCol,
+          cursorRow: widget.cursorRow,
+        ),
       ),
-      transform: new Matrix4.rotationZ(0)//new Matrix4.rotationZ(0.5)
     );
+  }
+
+  void _handleScreenTapUp(TapUpDetails details) {
+    RenderBox container = context.findRenderObject();
+    Offset localPosition = container.globalToLocal(details.globalPosition);
+    int col = localPosition.dx ~/ widget.charset.charWidth;
+    int row = localPosition.dy ~/ widget.charset.charHeight;
+    if (widget.onTapPosition != null) widget.onTapPosition(col, row);
   }
 }

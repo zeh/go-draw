@@ -109,6 +109,7 @@ class EditorState extends State<Editor> {
       document: snapshot.data,
       cursorCol: _controller.getColumn(),
       cursorRow: _controller.getRow(),
+      onTapPosition: _handleTapPosition,
     );
   }
 
@@ -127,7 +128,15 @@ class EditorState extends State<Editor> {
     if (code == 1) rows = 1;
     if (code == 2) cols = -1;
     if (code == 3) cols = 1;
-    _controller.moveBy(cols, rows);
-    _streamController.sink.add(_document);
+     setState(() {
+      _controller.moveBy(cols, rows);
+      _streamController.sink.add(_document);
+     });
+  }
+
+  void _handleTapPosition(int col, int row) {
+    setState(() {
+      _controller.moveTo(col, row);
+    });
   }
 }
