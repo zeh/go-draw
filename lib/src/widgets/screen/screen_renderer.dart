@@ -47,6 +47,12 @@ class _ScreenRendererState extends State<ScreenRenderer> {
     });
   }
 
+  @override
+  void dispose() {
+    blinkTimer.cancel();
+    super.dispose();
+  }
+
   //int ms = new DateTime.now().millisecondsSinceEpoch;
   @override
   Widget build(BuildContext context) {
