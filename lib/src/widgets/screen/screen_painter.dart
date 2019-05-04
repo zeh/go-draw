@@ -28,6 +28,7 @@ class ScreenPainter extends CustomPainter {
     int defaultBackgroundColorCode = 0;
     Paint backgroundPaint = Paint();
     backgroundPaint.color = colors.get(defaultBackgroundColorCode);
+    backgroundPaint.color = Color.fromRGBO(25, 25, 25, 1.0); // TODO: remove this, temporary
     canvas.drawRect(rect, backgroundPaint);
 
     if (charset.imageInfo != null && charset.imageInfo.image != null) {
