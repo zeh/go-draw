@@ -2,10 +2,12 @@ import "dart:async";
 
 import "package:flutter/widgets.dart";
 import "package:go_draw/src/data/screen/charset/templates/screen_charset_vga.dart";
+import "package:go_draw/src/data/screen/colors/screen_colors.dart";
 import "package:go_draw/src/data/screen/colors/templates/screen_colors_dos.dart";
 import "package:go_draw/src/data/screen/controllers/screen_keyboard_controller.dart";
 import "package:go_draw/src/data/screen/document/screen_document.dart";
 import "package:go_draw/src/widgets/bottom_spacer.dart";
+import "package:go_draw/src/widgets/color_bar/color_bar.dart";
 import "package:go_draw/src/widgets/keyboard/keyboard.dart";
 import "package:go_draw/src/widgets/keyboard/keyboard_key.dart";
 import "package:go_draw/src/widgets/screen/screen.dart";
@@ -21,6 +23,7 @@ class Editor extends StatefulWidget {
 
 class EditorState extends State<Editor> {
   ScreenDocument _document;
+  ScreenColors _colors;
   ScreenKeyboardController _controller;
   final StreamController<ScreenDocument> _streamController = StreamController<ScreenDocument>();
 
@@ -29,7 +32,10 @@ class EditorState extends State<Editor> {
     super.initState();
 
     _document = new ScreenDocument();
+    _colors = new ScreenColorsDOS();
     _controller = new ScreenKeyboardController(document: _document);
+    _controller.setForegroundColor(10);
+    _controller.setBackgroundColor(2);
   }
 
   @override
@@ -67,6 +73,13 @@ class EditorState extends State<Editor> {
               ),
             ],
           ),
+        ),
+        ColorBar(
+          colors: _colors,
+          currentForegroundColor: _controller.getForegroundColor(),
+          currentBackgroundColor: _controller.getBackgroundColor(),
+          onTapForegroundColor: _handleTapForegroundColor,
+          onTapBackgroundColor: _handleTapBackgroundColor,
         ),
         Keyboard(
           currentSet: 0,
@@ -110,7 +123,7 @@ class EditorState extends State<Editor> {
   Widget buildForStream(BuildContext context, AsyncSnapshot<ScreenDocument> snapshot) {
     return Screen(
       charset: ScreenCharsetVGA(context: context),
-      colors: ScreenColorsDOS(),
+      colors: _colors,
       document: snapshot.data,
       cursorCol: _controller.getColumn(),
       cursorRow: _controller.getRow(),
@@ -119,9 +132,6 @@ class EditorState extends State<Editor> {
   }
 
   void _insertChar(int charCode) {
-    // TODO: allow changing the color
-    _controller.setForegroundColor(10);
-    _controller.setBackgroundColor(2);
     _controller.insert(charCode);
     _streamController.sink.add(_document);
   }
@@ -133,15 +143,27 @@ class EditorState extends State<Editor> {
     if (code == 1) rows = 1;
     if (code == 2) cols = -1;
     if (code == 3) cols = 1;
-     setState(() {
+    setState(() {
       _controller.moveBy(cols, rows);
       _streamController.sink.add(_document);
-     });
+    });
   }
 
   void _handleTapPosition(int col, int row) {
     setState(() {
       _controller.moveTo(col, row);
+    });
+  }
+
+  void _handleTapForegroundColor(int colorNum) {
+    setState(() {
+      _controller.setForegroundColor(colorNum);
+    });
+  }
+
+  void _handleTapBackgroundColor(int colorNum) {
+    setState(() {
+      _controller.setBackgroundColor(colorNum);
     });
   }
 }
