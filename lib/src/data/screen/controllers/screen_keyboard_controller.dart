@@ -62,5 +62,13 @@ class ScreenKeyboardController {
   int getRow() {
     return _row;
   }
+
+  int getForegroundColor() {
+    return _foregroundColor;
+  }
+
+  int getBackgroundColor() {
+    return _backgroundColor;
+  }
 }
 
