@@ -50,15 +50,15 @@ class EditorState extends State<Editor> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         StatusBarSpacer(),
-        Padding(padding: EdgeInsets.all(10.0)),
-        GestureDetector(
-          onTap: () => Navigator.of(context).pushNamed("/other"),
-          child: Container(
-            padding: EdgeInsets.all(10.0),
-            color: Color(0xff0000ff),
-            child: Text("Go to other screen"),
-          ),
-        ),
+        // Padding(padding: EdgeInsets.all(10.0)),
+        // GestureDetector(
+        //   onTap: () => Navigator.of(context).pushNamed("/other"),
+        //   child: Container(
+        //     padding: EdgeInsets.all(10.0),
+        //     color: Color(0xff0000ff),
+        //     child: Text("Go to other screen"),
+        //   ),
+        // ),
         Expanded(
           child: Flex(
             direction: Axis.vertical,
