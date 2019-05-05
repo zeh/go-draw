@@ -21,4 +21,14 @@ class ScreenColorsDOS extends ScreenColors {
     Color.fromRGBO(255, 255, 85,  1), // E = Light Yellow
     Color.fromRGBO(255, 255, 255, 1), // F = Bright White
   ]);
+
+  @override
+  List<int> getForegroundColors() {
+    return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+  }
+
+  @override
+  List<int> getBackgroundColors() {
+    return [0, 1, 2, 3, 4, 5, 6, 7];
+  }
 }

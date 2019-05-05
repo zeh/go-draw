@@ -76,6 +76,19 @@ class ScreenColors {
     return colors[numColor];
   }
 
+  List<int> getForegroundColors() {
+    return getAllColors();
+  }
+
+  List<int> getBackgroundColors() {
+    return getAllColors();
+  }
+
+  List<int> getAllColors() {
+    int numColors = colors.length;
+    return new List<int>.generate(numColors, (int index) => index);
+  }
+
 
   // ================================================================================================================
   // PRIVATE INTERFACE ----------------------------------------------------------------------------------------------
