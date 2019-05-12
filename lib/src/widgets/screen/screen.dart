@@ -3,7 +3,9 @@ import "package:flutter/widgets.dart";
 import "package:go_draw/src/data/screen/charset/screen_charset.dart";
 import "package:go_draw/src/data/screen/colors/screen_colors.dart";
 import "package:go_draw/src/data/screen/document/screen_document.dart";
+import "package:go_draw/src/gestures/transform_gesture.dart";
 import "package:go_draw/src/utils/matrix_utils.dart";
+import 'package:vector_math/vector_math_64.dart';
 
 import "screen_renderer.dart";
 
@@ -35,6 +37,7 @@ class ScreenState extends State<Screen> {
   double editingScale = 1;
   double editingRotation = 0;
   Offset editingFocalPoint = Offset.zero;
+  Offset editingTranslation = Offset.zero;
 
   final GlobalKey _screenRendererKey = GlobalKey();
   final GlobalKey _screenContainerRendererKey = GlobalKey();
@@ -50,23 +53,14 @@ class ScreenState extends State<Screen> {
       behavior: HitTestBehavior.opaque,
       excludeFromSemantics: true,
       gestures: <Type, GestureRecognizerFactory>{
-        PanGestureRecognizer: new GestureRecognizerFactoryWithHandlers<PanGestureRecognizer>(
-          () => new PanGestureRecognizer(),
-          (PanGestureRecognizer instance) {
+        TransformGestureRecognizer:
+            new GestureRecognizerFactoryWithHandlers<TransformGestureRecognizer>(
+          () => new TransformGestureRecognizer(),
+          (TransformGestureRecognizer instance) {
             instance
-              ..dragStartBehavior = DragStartBehavior.down
-              ..onStart = _handleOnPanStart
-              ..onUpdate = _handleOnPanUpdate;
-          },
-        ),
-        ScaleGestureRecognizer:
-            new GestureRecognizerFactoryWithHandlers<ScaleGestureRecognizer>(
-          () => new ScaleGestureRecognizer(),
-          (ScaleGestureRecognizer instance) {
-            instance
-              ..onStart = _handleScaleStart
-              ..onUpdate = _handleScaleUpdate
-              ..onEnd = _handleScaleEnd;
+              ..onStart = _handleTransformStart
+              ..onUpdate = _handleTransformUpdate
+              ..onEnd = _handleTransformEnd;
           },
         ),
       },
@@ -91,6 +85,29 @@ class ScreenState extends State<Screen> {
     );
   }
 
+  void _handleTransformStart(TransformStartDetails details) {
+  }
+
+  void _handleTransformUpdate(TransformUpdateDetails details) {
+    setState(() {
+      // We offset the focal point by the existing translation so it can resize/rotate correctly
+      editingFocalPoint = _globalToLocal(_screenContainerRendererKey, details.pivot) - Offset(transformMatrix.getTranslation().x, transformMatrix.getTranslation().y);
+      editingRotation = details.rotation;
+      editingScale = details.scale;
+      editingTranslation = details.translation;
+    });
+  }
+
+  void _handleTransformEnd(TransformEndDetails details) {
+    setState(() {
+      _applyEditingTransformationsToMatrix(transformMatrix);
+      editingFocalPoint = Offset.zero;
+      editingRotation = 0;
+      editingScale = 1;
+      editingTranslation = Offset.zero;
+    });
+  }
+
   void _handleScreenTapUp(TapUpDetails details) {
     Offset localPosition = _globalToLocal(_screenRendererKey, details.globalPosition);
     int col = localPosition.dx ~/ widget.charset.charWidth;
@@ -103,50 +120,18 @@ class ScreenState extends State<Screen> {
     return container.globalToLocal(globalPosition);
   }
 
-  void _handleOnPanStart(DragStartDetails position) {
-  }
-
-  void _handleOnPanUpdate(DragUpdateDetails details) {
-    setState(() {
-      transformMatrix.leftTranslate(details.delta.dx, details.delta.dy);
-    });
-  }
-
-  void _handleScaleStart(ScaleStartDetails details) {
-    editingScale = 1;
-    editingRotation = 0;
-    editingFocalPoint = Offset.zero;
-  }
-
-  void _handleScaleUpdate(ScaleUpdateDetails details) {
-    setState(() {
-      editingScale = details.scale;
-      editingRotation = details.rotation;
-      // We offset the focal point by the existing translation so it can resize/rotate correctly
-      editingFocalPoint = _globalToLocal(_screenContainerRendererKey, details.focalPoint) - Offset(transformMatrix.getTranslation().x, transformMatrix.getTranslation().y);
-    });
-  }
-
-  void _handleScaleEnd(ScaleEndDetails details) {
-    setState(() {
-      _applyEditingTransformationsToMatrix(transformMatrix);
-      editingScale = 1;
-      editingRotation = 0;
-      editingFocalPoint = Offset.zero;
-    });
-  }
-
   void _applyEditingTransformationsToMatrix(Matrix4 matrix) {
     final editingTransform = Matrix4.identity();
     editingTransform.translate(editingFocalPoint.dx, editingFocalPoint.dy);
     editingTransform.rotateZ(editingRotation);
     editingTransform.scale(editingScale);
     editingTransform.translate(-editingFocalPoint.dx, -editingFocalPoint.dy);
+    editingTransform.leftTranslate(editingTranslation.dx, editingTranslation.dy);
     matrix.setFrom(mergeTransformations(matrix, editingTransform));
   }
 
   Matrix4 _getTransformMatrix() {
-    if (editingScale != 1 || editingRotation != 0) {
+    if (editingScale != 1 || editingRotation != 0 || editingTranslation != Offset.zero) {
       final editingMatrix = transformMatrix.clone();
       _applyEditingTransformationsToMatrix(editingMatrix);
       return editingMatrix;
