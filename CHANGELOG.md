@@ -8,6 +8,12 @@ Changes are listed by date, following the [Keep a Changelog](https://keepachange
 
 ### Added
 
+## 2019-05-12
+
+- Better, custom free transform handler for multi-touch
+
+### Added
+
 - Free transform editing with multi-touch
 - Basic toolbar (not functional)
 - Basic color selection bar
