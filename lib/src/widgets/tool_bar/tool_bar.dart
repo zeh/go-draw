@@ -13,7 +13,6 @@ class ToolBar extends StatefulWidget {
 
   @override
   _ToolBarState createState() => _ToolBarState();
-
 }
 
 enum Tools {
