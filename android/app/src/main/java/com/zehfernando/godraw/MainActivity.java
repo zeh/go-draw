@@ -11,5 +11,7 @@ public class MainActivity extends FlutterActivity {
     GeneratedPluginRegistrant.registerWith(this);
 
     // TODO: show splash layout, remove when first frame drawn
+    // setContentView(R.layout.splash);
+    // Disable status etc? https://medium.com/@diegoveloper/flutter-splash-screen-9f4e05542548
   }
 }
