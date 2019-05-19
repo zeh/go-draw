@@ -3,12 +3,16 @@ import "package:flutter/widgets.dart";
 class Background extends StatelessWidget {
   final double carvePosition;
   final double carveDepth;
+  final double circleRadius;
+  final double circleDepth;
 
-  static final double HEIGHT = 100;
+  static const double HEIGHT = 50;
 
   Background({
     @required this.carvePosition,
     @required this.carveDepth,
+    @required this.circleRadius,
+    @required this.circleDepth,
   });
 
   @override
@@ -19,6 +23,8 @@ class Background extends StatelessWidget {
         painter: BackgroundPainter(
           carvePosition: carvePosition,
           carveDepth: carveDepth,
+          circleRadius: circleRadius,
+          circleDepth: circleDepth,
         ),
       ),
     );
@@ -28,11 +34,15 @@ class Background extends StatelessWidget {
 class BackgroundPainter extends CustomPainter {
   final double carvePosition;
   final double carveDepth;
+  final double circleRadius;
+  final double circleDepth;
   final Color fill = Color.fromRGBO(255, 255, 255, 1.0);
 
   BackgroundPainter({
     @required this.carvePosition,
     @required this.carveDepth,
+    @required this.circleRadius,
+    @required this.circleDepth,
   });
 
   @override
@@ -86,7 +96,7 @@ class BackgroundPainter extends CustomPainter {
     // End
     path.close();
 
-    path.addOval(Rect.fromCircle(center: Offset(carveX, 0), radius: carveDepth - 4));
+    path.addOval(Rect.fromCircle(center: Offset(carveX, circleDepth), radius: circleRadius));
 
     canvas.drawShadow(path, Color.fromRGBO(0, 0, 0, 1.0), 2, true);
     canvas.drawPath(path, paint);
