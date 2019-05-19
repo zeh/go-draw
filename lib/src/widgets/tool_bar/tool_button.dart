@@ -27,19 +27,10 @@ class _ToolButton extends State<ToolButton> {
       child: GestureDetector(
         onTap: () => widget.onTap(),
         child: Container(
-          padding: EdgeInsets.all(10.0),
-          decoration: new BoxDecoration(
-            border: new Border.all(
-              color: Color(0xffd0d0d0),
-              width: 0.5,
-              style: BorderStyle.solid
-            ),
-            color: Color(0xffffffff),
-          ),
+          height: 50,
+          padding: EdgeInsets.all(12.0),
           child: SvgPicture.asset(
             widget.assetName,
-            width: 20,
-            height: 20,
           ),
         ),
       ),
