@@ -47,27 +47,27 @@ class _ToolBarState extends State<ToolBar> with SingleTickerProviderStateMixin {
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          // Row(
-          //   children: [
-          //     ToolButton(
-          //       assetName: "assets/tools/i-cursor.svg",
-          //       onTap: () => widget.onTap(Tools.Text),
-          //     ),
-          //     ToolButton(
-          //       assetName: "assets/tools/folder-open.svg",
-          //       onTap: () => widget.onTap(Tools.File),
-          //     ),
-          //     ToolButton(
-          //       assetName: "assets/tools/share-alt.svg",
-          //       onTap: () => widget.onTap(Tools.Share),
-          //     ),
-          //   ],
-          // ),
           Background(
             carveDepth: _animate.value * 40,
             carvePosition: 0.25,
             circleDepth: 0,
             circleRadius: _animate.value * 36,
+          ),
+          Row(
+            children: [
+              ToolButton(
+                assetName: "assets/tools/i-cursor.svg",
+                onTap: () => widget.onTap(Tools.Text),
+              ),
+              ToolButton(
+                assetName: "assets/tools/folder-open.svg",
+                onTap: () => widget.onTap(Tools.File),
+              ),
+              ToolButton(
+                assetName: "assets/tools/share-alt.svg",
+                onTap: () => widget.onTap(Tools.Share),
+              ),
+            ],
           ),
         ]
       ),
