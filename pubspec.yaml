@@ -25,6 +25,7 @@ dependencies:
   flutter_svg: ^0.12.4
   package_info: any
   sentry: any
+  shared_preferences: ^0.5.2
 
   # All Firebase dependencies
   # More info: https://firebase.google.com/docs/flutter/setup#add_flutterfire_plugins
