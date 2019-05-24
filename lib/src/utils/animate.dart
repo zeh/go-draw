@@ -22,7 +22,7 @@ class AniMate {
     // TODO: extract into an onComplete
     _controller.addStatusListener((state) {
       if (state == AnimationStatus.completed) {
-        play();
+        //play();
       }
     });
 
@@ -36,8 +36,6 @@ class AniMate {
     _animation.addListener(() {
       state.setState((){});
     });
-
-    play();
   }
 
   // ================================================================================================================
@@ -47,6 +45,13 @@ class AniMate {
     if (_controller != null) {
       _controller.reset();
       _controller.forward();
+    }
+  }
+
+  void stop() {
+    if (_controller != null) {
+      _controller.reset();
+      _controller.stop();
     }
   }
 
