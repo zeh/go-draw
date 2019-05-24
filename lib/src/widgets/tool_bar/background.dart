@@ -56,7 +56,7 @@ class BackgroundPainter extends CustomPainter {
     final double bleed = 100.0;
     final double width = size.width;
     final double height = Background.HEIGHT;
-    final double carveWidth = carveDepth * 3;
+    final double carveWidth = carveDepth * 2.4;
     final double carveControlWidthTop = carveWidth * 0.2;
     final double carveControlWidthBottom = carveWidth * 0.33;
     final double carveX = size.width * carvePosition;
