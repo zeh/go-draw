@@ -4,6 +4,27 @@ class AniMate {
   AnimationController _controller;
   Animation _curve;
   Animation<double> _animation;
+  void Function() _onComplete;
+
+
+  // ================================================================================================================
+	// STATIC INTERFACE -----------------------------------------------------------------------------------------------
+
+  static AniMate create({
+    @required TickerProvider ticker,
+    @required State state,
+    @required int duration,
+    Curve curve,
+  }) {
+    final animator = new AniMate(
+      ticker: ticker,
+      state: state,
+      duration: duration,
+      curve: curve,
+    );
+    return animator;
+  }
+
 
   // ================================================================================================================
   // CONSTRUCTOR ----------------------------------------------------------------------------------------------------
@@ -22,7 +43,7 @@ class AniMate {
     // TODO: extract into an onComplete
     _controller.addStatusListener((state) {
       if (state == AnimationStatus.completed) {
-        //play();
+        if (_onComplete != null) _onComplete();
       }
     });
 
@@ -38,13 +59,16 @@ class AniMate {
     });
   }
 
+
   // ================================================================================================================
 	// PUBLIC INTERFACE -----------------------------------------------------------------------------------------------
 
-  void play() {
+  Future<void> play([void Function() onComplete]) {
     if (_controller != null) {
       _controller.reset();
       _controller.forward();
+
+      _onComplete = onComplete;
     }
   }
 
@@ -61,18 +85,7 @@ class AniMate {
 
   double get value => _animation.value;
 
-  static AniMate create({
-    @required TickerProvider ticker,
-    @required State state,
-    @required int duration,
-    Curve curve,
-  }) {
-    final animator = new AniMate(
-      ticker: ticker,
-      state: state,
-      duration: duration,
-      curve: curve,
-    );
-    return animator;
+  bool get isAnimating {
+    return _controller.isAnimating;
   }
 }
