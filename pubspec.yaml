@@ -50,6 +50,7 @@ flutter:
 
   assets:
     - assets/charsets/ibmvga8_cp437_8x16.png
+    - assets/config/configs.json
     - assets/tools/folder-open.svg
     - assets/tools/i-cursor.svg
     - assets/tools/share-alt.svg

@@ -1,0 +1,16 @@
+{
+	"production": {
+		"analytics.enabled": true,
+		"analytics.log.enabled": false,
+		"sentry.dsn": "https://a4aaa985963340168a76a4f1094ac16b@sentry.io/1451472",
+		"sentry.enabled": true,
+		"sentry.log.enabled": false
+	},
+	"dev": {
+		"analytics.enabled": false,
+		"analytics.log.enabled": true,
+		"sentry.dsn": "https://a4aaa985963340168a76a4f1094ac16b@sentry.io/1451472",
+		"sentry.enabled": false,
+		"sentry.log.enabled": false
+	}
+}
