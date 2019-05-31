@@ -18,6 +18,7 @@ class Config {
   Config(this.id, Map<String, dynamic> map) {
     AnalyticsCollectionEnabled = map["analytics.collection.enabled"];
     AnalyticsLogEnabled = map["analytics.log.enabled"];
+    AnalyticsPerformanceEnabled = map["analytics.performance.enabled"];
     SentryDsn = map["sentry.dsn"];
     SentryEnabled = map["sentry.enabled"];
     SentryLogEnabled = map["error.logs.enabled"];

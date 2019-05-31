@@ -2,6 +2,7 @@
 	"production": {
 		"analytics.collection.enabled": true,
 		"analytics.log.enabled": false,
+		"analytics.performance.enabled": true,
 		"sentry.dsn": "https://a4aaa985963340168a76a4f1094ac16b@sentry.io/1451472",
 		"sentry.enabled": true,
 		"sentry.log.enabled": false
@@ -9,6 +10,7 @@
 	"dev": {
 		"analytics.collection.enabled": false,
 		"analytics.log.enabled": true,
+		"analytics.performance.enabled": false,
 		"sentry.dsn": "https://a4aaa985963340168a76a4f1094ac16b@sentry.io/1451472",
 		"sentry.enabled": false,
 		"sentry.log.enabled": false
