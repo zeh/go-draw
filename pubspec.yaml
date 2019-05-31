@@ -22,7 +22,7 @@ dependencies:
 
   cupertino_icons: ^0.1.2
   device_info: any
-  flutter_svg: ^0.12.4
+  flutter_svg: ^0.13.0
   package_info: any
   sentry: any
 
