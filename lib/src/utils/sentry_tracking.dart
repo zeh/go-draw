@@ -15,7 +15,12 @@ class SentryTracking {
   static bool sendToSentry = false;
   static bool printStackTrace = false;
 
-  static Future init({String dsn}) async {
+  static Future init({
+      @required String dsn,
+      Map<String, String> tags,
+      bool shouldPrintStackTrace = true,
+      bool shouldSendToSentry = true
+    }) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String deviceArchitecture = "?";
     String deviceModel = "?";
@@ -43,6 +48,7 @@ class SentryTracking {
         release: "${packageInfo.version}.${packageInfo.buildNumber}",
         environment: "-", // TODO: add environment as config
         tags: {
+          ...tags,
           "mode-debug": _isInDebugMode().toString(),
           "mode-release": kReleaseMode.toString(),
           "os-name": Platform.operatingSystem,
@@ -54,8 +60,9 @@ class SentryTracking {
         },
       ),
     );
-    sendToSentry = true; // !_isInDebugMode(); // TODO: make config-dependent
-    printStackTrace = true; // _isInDebugMode();
+
+    sendToSentry = shouldSendToSentry;
+    printStackTrace = shouldPrintStackTrace;
 
     // Captures additional errors reported by the Flutter framework
     FlutterError.onError = (FlutterErrorDetails details) {
