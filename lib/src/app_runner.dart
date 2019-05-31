@@ -3,6 +3,7 @@ import "dart:async";
 import "package:flutter/widgets.dart";
 import "package:go_draw/src/config/config.dart";
 import "package:go_draw/src/go_draw.dart";
+import "package:go_draw/src/utils/perf.dart";
 import "package:go_draw/src/utils/sentry_tracking.dart";
 import "package:go_draw/src/utils/analytics.dart";
 
@@ -14,6 +15,9 @@ class AppRunner {
       // Initialize analytics
       Analytics.setEnabled(Config.get().AnalyticsCollectionEnabled);
       Analytics.setLogEnabled(Config.get().AnalyticsLogEnabled);
+
+      // Initialize performance tracking
+      Perf.setEnabled(Config.get().AnalyticsPerformanceEnabled);
 
       if (Config.get().SentryEnabled) {
         // Initialize with error interception
