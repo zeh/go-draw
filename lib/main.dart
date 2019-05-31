@@ -3,6 +3,7 @@ import "dart:async";
 import "package:flutter/widgets.dart";
 import "package:go_draw/src/config/config.dart";
 import "package:go_draw/src/utils/sentry_tracking.dart";
+import "package:go_draw/src/utils/analytics.dart";
 
 import "src/routes/editor/editor.dart";
 import "src/routes/other/other.dart";
@@ -11,13 +12,33 @@ void main() {
   Config.load("dev").whenComplete(() {
     print('Initializing using config "${Config.get().id}"');
 
-    runZoned<Future<void>>(() async {
-      await SentryTracking.init(dsn: "https://a4aaa985963340168a76a4f1094ac16b@sentry.io/1451472");
-      runApp(GoDraw());
-    }, onError: (error, stackTrace) {
-      SentryTracking.reportError(error, stackTrace);
-    });
+    // Initialize analytics
+    Analytics.setEnabled(Config.get().AnalyticsEnabled);
+    Analytics.setLogEnabled(Config.get().AnalyticsLogEnabled);
+
+    if (Config.get().SentryEnabled) {
+      // Initialize with error interception
+      runZoned<Future<void>>(() async {
+        await SentryTracking.init(
+          dsn: Config.get().SentryDsn,
+          shouldPrintStackTrace: Config.get().SentryLogEnabled,
+          tags: {
+            "config-id": Config.get().id,
+          },
+        );
+        run();
+      }, onError: (error, stackTrace) {
+        SentryTracking.reportError(error, stackTrace);
+      });
+    } else {
+      // Initialize normally
+      run();
+    }
   });
+}
+
+void run() {
+  runApp(GoDraw());
 }
 
 class GoDraw extends StatelessWidget {
