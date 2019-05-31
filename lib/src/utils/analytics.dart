@@ -4,6 +4,7 @@ import "package:firebase_analytics/observer.dart";
 class Analytics {
   static FirebaseAnalytics analytics = FirebaseAnalytics();
   static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
+  static bool logEnabled = true;
 
   static init() {
 
@@ -15,6 +16,14 @@ class Analytics {
       screenName: name,
       screenClassOverride: name,
     );
-    print("Analytics :: trackScreen: " + name);
+    if (logEnabled) print("[Analytics] trackScreen: " + name);
+  }
+
+  static Future<void> setEnabled(bool enabled) async {
+    await analytics.setAnalyticsCollectionEnabled(enabled);
+  }
+
+  static Future<void> setLogEnabled(bool enabled) async {
+    logEnabled = enabled;
   }
 }
