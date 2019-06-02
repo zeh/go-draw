@@ -5,8 +5,9 @@ import "package:flutter/services.dart";
 class Config {
 
   final String id;
-  bool AnalyticsEnabled;
+  bool AnalyticsCollectionEnabled;
   bool AnalyticsLogEnabled;
+  bool AnalyticsPerformanceEnabled;
   String SentryDsn;
   bool SentryEnabled;
   bool SentryLogEnabled;
@@ -15,7 +16,7 @@ class Config {
   // CONSTRUCTOR ----------------------------------------------------------------------------------------------------
 
   Config(this.id, Map<String, dynamic> map) {
-    AnalyticsEnabled = map["analytics.enabled"];
+    AnalyticsCollectionEnabled = map["analytics.collection.enabled"];
     AnalyticsLogEnabled = map["analytics.log.enabled"];
     SentryDsn = map["sentry.dsn"];
     SentryEnabled = map["sentry.enabled"];

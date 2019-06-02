@@ -12,7 +12,7 @@ class AppRunner {
       print('Initializing using config "${Config.get().id}"');
 
       // Initialize analytics
-      Analytics.setEnabled(Config.get().AnalyticsEnabled);
+      Analytics.setEnabled(Config.get().AnalyticsCollectionEnabled);
       Analytics.setLogEnabled(Config.get().AnalyticsLogEnabled);
 
       if (Config.get().SentryEnabled) {
