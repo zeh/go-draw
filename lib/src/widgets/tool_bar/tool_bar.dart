@@ -74,32 +74,20 @@ class _ToolBarState extends State<ToolBar> with SingleTickerProviderStateMixin {
     );
   }
 
-  double backIn(double t, [double s = 1.70158]) {
-		return t * t * ((s + 1) * t - s);
-	}
-
-  double backOut(double t, [double s = 1.70158]) {
-		t--;
-		return t * t * ((s + 1) * t + s) + 1;
-	}
-
-  double backInOut(double t, [double s = 1.70158]) {
-		return (t *= 2) < 1 ? backIn(t, s) / 2 : backOut(t - 1, s) / 2 + 0.5;
-	}
-
   Widget buildBackground() {
     final double maxCarveDepth = 40;
-    final double minCircleDepth = 100;
+    final double minCircleDepth = Background.HEIGHT * 0.5;
     final double maxCircleDepth = 10;
-    final double minCircleRadius = 16;
+    final double minCircleRadius = 26;
     final double maxCircleRadius = 26;
 
     if (_toolAnimatePhase.value < 0.5) {
       // Hiding old
       double f = map(_toolAnimatePhase.value, 0, 0.5);
-      double ff = backIn(f); // Curves.easeInBack.transformInternal(f); //backIn(f, 40); // Curves.easeOutBack.transformInternal(f);
+      double ff = Curves.easeInBack.transformInternal(f);
+      double fe = Curves.easeInExpo.transformInternal(f);
       return Background(
-        carveDepth: map(f, 0, 1, maxCarveDepth, 0),
+        carveDepth: map(fe, 0, 1, maxCarveDepth, 0),
         carvePosition: (_prevTool + 1) / (_numTools + 1),
         circleDepth: map(ff, 0, 1, maxCircleDepth, minCircleDepth),
         circleRadius: map(f, 0, 1, maxCircleRadius, minCircleRadius),
@@ -108,9 +96,10 @@ class _ToolBarState extends State<ToolBar> with SingleTickerProviderStateMixin {
       // Showing new
       double f = map(_toolAnimatePhase.value, 0.5, 1);
       // out back =  Cubic(0.175, 0.885, 0.32, 1.275);
-      double ff = backOut(f); // Cubic(0.17, 0.67, 0.4, 5.38).transformInternal(f); //Curves.easeOutBack.transformInternal(f); //; // backOut(f, 40);
+      double ff = Curves.easeOutBack.transformInternal(f);
+      double fe = Curves.easeOutExpo.transformInternal(f);
       return Background(
-        carveDepth: map(f, 0, 1, 0, maxCarveDepth),
+        carveDepth: map(fe, 0, 1, 0, maxCarveDepth),
         carvePosition: (_currTool + 1) / (_numTools + 1),
         circleDepth: map(ff, 0, 1, minCircleDepth, maxCircleDepth),
         circleRadius: map(f, 0, 1, minCircleRadius, maxCircleRadius),
