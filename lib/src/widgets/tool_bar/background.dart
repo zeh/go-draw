@@ -1,18 +1,20 @@
 import "package:flutter/widgets.dart";
 
 class Background extends StatelessWidget {
-  final double carvePosition;
   final double carveDepth;
-  final double circleRadius;
+  final double carvePosition;
+  final double carveWidth;
   final double circleDepth;
+  final double circleRadius;
 
   static const double HEIGHT = 50;
 
   Background({
-    @required this.carvePosition,
     @required this.carveDepth,
-    @required this.circleRadius,
+    @required this.carvePosition,
+    @required this.carveWidth,
     @required this.circleDepth,
+    @required this.circleRadius,
   });
 
   @override
@@ -21,10 +23,11 @@ class Background extends StatelessWidget {
       constraints: BoxConstraints.expand(height: Background.HEIGHT),
       child: CustomPaint(
         painter: BackgroundPainter(
-          carvePosition: carvePosition,
           carveDepth: carveDepth,
-          circleRadius: circleRadius,
+          carvePosition: carvePosition,
+          carveWidth: carveWidth,
           circleDepth: circleDepth,
+          circleRadius: circleRadius,
         ),
       ),
     );
@@ -32,17 +35,19 @@ class Background extends StatelessWidget {
 }
 
 class BackgroundPainter extends CustomPainter {
-  final double carvePosition;
   final double carveDepth;
-  final double circleRadius;
+  final double carvePosition;
+  final double carveWidth;
   final double circleDepth;
+  final double circleRadius;
   final Color fill = Color.fromRGBO(255, 255, 255, 1.0);
 
   BackgroundPainter({
-    @required this.carvePosition,
     @required this.carveDepth,
-    @required this.circleRadius,
+    @required this.carvePosition,
+    @required this.carveWidth,
     @required this.circleDepth,
+    @required this.circleRadius,
   });
 
   @override
@@ -56,7 +61,6 @@ class BackgroundPainter extends CustomPainter {
     final double bleed = 100.0;
     final double width = size.width;
     final double height = Background.HEIGHT;
-    final double carveWidth = carveDepth * 2.4;
     final double carveControlWidthTop = carveWidth * 0.2;
     final double carveControlWidthBottom = carveWidth * 0.33;
     final double carveX = size.width * carvePosition;
