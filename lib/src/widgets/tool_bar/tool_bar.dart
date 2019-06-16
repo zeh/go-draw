@@ -39,7 +39,7 @@ class _ToolBarState extends State<ToolBar> with SingleTickerProviderStateMixin {
     _toolAnimatePhase = AniMate.create(
       ticker: this,
       state: this,
-      duration: 600,
+      duration: 1000,
       curve: Curves.easeInOut,
     );
   }
@@ -78,31 +78,31 @@ class _ToolBarState extends State<ToolBar> with SingleTickerProviderStateMixin {
     final double maxCarveDepth = 40;
     final double minCircleDepth = Background.HEIGHT * 0.5;
     final double maxCircleDepth = 10;
-    final double minCircleRadius = 26;
-    final double maxCircleRadius = 26;
+    final double circleRadius = 26;
 
     if (_toolAnimatePhase.value < 0.5) {
       // Hiding old
       double f = map(_toolAnimatePhase.value, 0, 0.5);
       double ff = Curves.easeInBack.transformInternal(f);
-      double fe = Curves.easeInExpo.transformInternal(f);
+      double fe = Curves.easeInQuint.transformInternal(f);
       return Background(
         carveDepth: map(fe, 0, 1, maxCarveDepth, 0),
         carvePosition: (_prevTool + 1) / (_numTools + 1),
+        carveWidth: map(fe, 0, 1, maxCarveDepth * 2.4, maxCarveDepth * 1.4),
         circleDepth: map(ff, 0, 1, maxCircleDepth, minCircleDepth),
-        circleRadius: map(f, 0, 1, maxCircleRadius, minCircleRadius),
+        circleRadius: circleRadius,
       );
     } else {
       // Showing new
       double f = map(_toolAnimatePhase.value, 0.5, 1);
-      // out back =  Cubic(0.175, 0.885, 0.32, 1.275);
       double ff = Curves.easeOutBack.transformInternal(f);
-      double fe = Curves.easeOutExpo.transformInternal(f);
+      double fe = Curves.easeOutQuint.transformInternal(f);
       return Background(
         carveDepth: map(fe, 0, 1, 0, maxCarveDepth),
         carvePosition: (_currTool + 1) / (_numTools + 1),
+        carveWidth: map(fe, 0, 1, maxCarveDepth * 1.4, maxCarveDepth * 2.4),
         circleDepth: map(ff, 0, 1, minCircleDepth, maxCircleDepth),
-        circleRadius: map(f, 0, 1, minCircleRadius, maxCircleRadius),
+        circleRadius: circleRadius,
       );
     }
   }
