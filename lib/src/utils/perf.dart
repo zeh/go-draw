@@ -1,14 +1,13 @@
-import "package:firebase_performance/firebase_performance.dart";
+// TODO: Disabled Firebase for now
+// import "package:firebase_performance/firebase_performance.dart";
 
 // For more info: https://pub.dev/packages/firebase_performance
 
 class Perf {
-  static init() {
-
-  }
+  static init() {}
 
   static Future<void> setEnabled(bool enabled) async {
-    await FirebasePerformance.instance.setPerformanceCollectionEnabled(enabled);
+    // await FirebasePerformance.instance.setPerformanceCollectionEnabled(enabled);
   }
 
   // TODO: track performance
