@@ -24,6 +24,13 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # All Firebase dependencies
+  # More info: https://firebase.google.com/docs/flutter/setup#add_flutterfire_plugins
+  # List of plugins and versions: https://firebaseopensource.com/projects/firebaseextended/flutterfire/#plugins
+  firebase_core: ^0.4.5
+  firebase_analytics: ^5.0.16
+  firebase_performance: ^0.3.2
+
   # All other custom dependencies
   # To check on latest versions: https://pub.dev/packages/<package-name>
   cupertino_icons: ^0.1.3
